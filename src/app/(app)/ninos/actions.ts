@@ -24,10 +24,13 @@ export async function createChildAction(input: {
   if (!user) return { success: false, error: "No autorizado" };
 
   try {
-    const child = await createChild(supabase, {
-      ...parsed.data,
-      interests: parsed.data.interests ?? [],
-    });
+const child = await createChild(supabase, {
+  ...parsed.data,
+  sex: parsed.data.sex ?? null,
+  interests: parsed.data.interests ?? [],
+  notes: parsed.data.notes ?? null,
+  delivery_address: parsed.data.delivery_address ?? null,
+}); 
     return { success: true, data: { id: child.id } };
   } catch (e) {
     console.error(e);

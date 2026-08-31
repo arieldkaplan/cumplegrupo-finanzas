@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -24,7 +24,7 @@ function humanizeAuthError(error: unknown): string {
   return fallback;
 }
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -101,7 +101,6 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-sm space-y-6">
-
         <div className="text-center">
           <h1 className="text-2xl font-semibold">CumpleGrupo</h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -147,7 +146,6 @@ export default function LoginPage() {
 
         {mode === "password" ? (
           <form onSubmit={handlePasswordLogin} className="space-y-4">
-
             <div>
               <label
                 htmlFor="email"
@@ -211,7 +209,6 @@ export default function LoginPage() {
             >
               {loading ? "Ingresando…" : "Ingresar"}
             </Button>
-
           </form>
         ) : sent ? (
           <div className="rounded-lg border bg-card p-4 text-center text-sm">
@@ -223,7 +220,6 @@ export default function LoginPage() {
           </div>
         ) : (
           <form onSubmit={handleMagicLink} className="space-y-4">
-
             <div>
               <label htmlFor="magic-email" className="sr-only">
                 Email
@@ -257,7 +253,6 @@ export default function LoginPage() {
             >
               {loading ? "Enviando…" : "Enviar link mágico"}
             </Button>
-
           </form>
         )}
 
@@ -266,8 +261,21 @@ export default function LoginPage() {
             Volver al inicio
           </Link>
         </p>
-
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <p className="text-sm text-muted-foreground">Cargando...</p>
+        </div>
+      }
+    >
+      <LoginContent />
+    </Suspense>
   );
 }

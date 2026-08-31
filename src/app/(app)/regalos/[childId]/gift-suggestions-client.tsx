@@ -28,7 +28,7 @@ export function GiftSuggestionsClient({
     <div className="mt-3">
       <Button
         size="sm"
-        variant={isDecided ? "secondary" : "outline"}
+        variant={isDecided ? "default" : "outline"}
         disabled={loading || isDecided}
         onClick={handleChoose}
       >

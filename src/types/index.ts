@@ -2,7 +2,10 @@
  * Tipos de dominio y re-export de database.
  * Para validación ver lib/validations.
  */
-
+import type {
+  GroupMemberRow,
+  ChildRow,
+} from "@/types/database";
 import type { BirthdayStatus, GroupRow, ProfileRow } from "./database";
 
 export type {
